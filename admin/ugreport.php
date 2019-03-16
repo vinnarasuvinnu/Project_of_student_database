@@ -13,34 +13,139 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
 <style type="text/css">
   
-    tfoot input {
-        width: 100px;
-        padding: 10px;
-    }
-      input[type=button]{
-        margin-right: 10px;
+    @media print
+{
+  #footer {
+    display: block; 
+    position: fixed; 
+    bottom: 0;
+  } 
+}
+@page { margin: 0; }
 
-      }
-        input[type=button]{
-                    margin-right: 10px;
+td{
+  color: black;
+}
 
-
-        }
-        h3{
-            color: white;
-        }
+   
 </style>
 <script type="text/javascript">
-	$(document).ready(function(){
+	 $(document).ready(function(){
 
-		 $('#save_value').click(function(){
+   $('#save_value').click(function(){
 
-      $('#mydoc').empty();
-
+    $('#textbody').empty();
         var val = [];
         $(':checkbox:checked').each(function(i){
           val[i] = $(this).val();
         });
+
+        var content="";
+
+           for(var i=0;i<val.length;i++){
+
+
+            titleval="";
+
+
+        
+
+        if("name"==val[i]){
+
+          titleval="Name";
+        }
+
+        else if("med1" == val[i]){
+
+          titleval="Medium";
+         }
+
+       else if("ano"==val[i]){
+
+        titleval="Admission number"
+        }
+        else if("year" ==val[i]){
+          titleval="Year";
+        
+        }
+
+
+      else if("degree" == val[i]){
+        titleval="Degree";
+      }
+      else if("course1" == val[i]){
+        titleval="Course" 
+      }
+      else if("dept1" == val[i]){
+        titleval="Department"; 
+      }
+      else if("shift1" == val[i]){
+        titleval="Shift"; 
+      }
+
+
+else if("timing1" == val[i]){
+
+        titleval="Timing";
+      }
+
+
+
+
+else if("rno" == val[i]){
+
+    titleval="Roll no"      
+      }
+
+
+
+
+     else if("gen1" == val[i]){
+      titleval="Gender";
+        
+      }
+
+
+
+      else if("com" == val[i]){
+        titleval="Community";
+
+      
+      }
+
+      else{
+        titleval="Date of birth";
+        
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            content=content+"<div class='col-md-2' style='font-weight:bold'>"+titleval+"</div>";
+
+
+           }
+           $('#textbody').append("<div class='row'>"+content+"</div><hr>");
+
+
+
+
+
+
 
 
 
@@ -49,104 +154,125 @@
    data: {arr:val},
    url: "spec.php",
    success: function(data){
-   	console.log(data);
-   	var data=JSON.parse(data);
-   	data=data.result;
-   	console.log(data);
-   	$.each(data,function(key,value){
+    console.log(data);
+    var data=JSON.parse(data);
+    data=data.result;
+    console.log(data);
+    $.each(data,function(key,value){
 
 /*`ano`, `year`, `degree`, `course1`, `dept1`, `med1`, `shift1`, `timing1`, `rno`, `name`, `gen1`, `com`, `dob`*/
 
-   		$.each(value,function(k1,v1){
-
-   			if(v1.name != undefined){
-
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Name</div><div class='col-md-6 text-center'>"+v1.name+"</div></div>");
-   		}
+        content="";
 
 
+      $.each(value,function(k1,v1){
+        if(v1.name != undefined){
 
-   			if(v1.med1 != undefined){
-
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Medium</div><div class='col-md-6 text-center'>"+v1.med1+"</div></div>");
-   		}
-
-   			if(v1.ano != undefined){
-
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Admission number</div><div class='col-md-6 text-center'>"+v1.ano+"</div></div>");
-   		}
-   			if(v1.year != undefined){
-
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Year</div><div class='col-md-6 text-center'>"+v1.year+"</div></div>");
-   		}
+        content=content+"<div class='col-md-2'>"+v1.name+"</div>";
+      }
 
 
-   		if(v1.degree != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Degree</div><div class='col-md-6 text-center'>"+v1.degree+"</div></div>");
-   		}
+        if(v1.med1 != undefined){
+
+     
+                content=content+"<div class='col-md-2'>"+v1.med1+"</div>";
+
+      }
+
+        if(v1.ano != undefined){
+
+        
+                content=content+"<div class='col-md-2'>"+v1.ano+"</div>";
+
+      }
+        if(v1.year != undefined){
 
 
-   		if(v1.course1 != undefined){
+                content=content+"<div class='col-md-2'>"+v1.year+"</div>";
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Course</div><div class='col-md-6 text-center'>"+v1.course1+"</div></div>");
-   		}
+      }
 
-	if(v1.dept1 != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Department</div><div class='col-md-6 text-center'>"+v1.dept1+"</div></div>");
-   		}
+      if(v1.degree != undefined){
+
+       
+                content=content+"<div class='col-md-2'>"+v1.degree+"</div>";
+
+      }
+
+
+      if(v1.course1 != undefined){
+
+     
+                content=content+"<div class='col-md-2'>"+v1.course1+"</div>";
+
+      }
+
+  if(v1.dept1 != undefined){
+
+       
+                content=content+"<div class='col-md-2'>"+v1.dept1+"</div>";
+
+      }
 
 
 if(v1.shift1 != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Shift</div><div class='col-md-6 text-center'>"+v1.shift1+"</div></div>");
-   		}
+             content=content+"<div class='col-md-2'>"+v1.shift1+"</div>";
+
+      }
 
 
 if(v1.timing1 != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Timing</div><div class='col-md-6 text-center'>"+v1.timing1+"</div></div>");
-   		}
+               content=content+"<div class='col-md-2'>"+v1.timing1+"</div>";
+
+      }
 
 
 
 
 if(v1.rno != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Register no</div><div class='col-md-6 text-center'>"+v1.rno+"</div></div>");
-   		}
+               content=content+"<div class='col-md-2'>"+v1.rno+"</div>";
+
+      }
 
 
 
 
-   		if(v1.gen1 != undefined){
+      if(v1.gen1 != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Gender</div><div class='col-md-6 text-center'>"+v1.gen1+"</div></div>");
-   		}
+               content=content+"<div class='col-md-2'>"+v1.gen1+"</div>";
 
-
-
-   		if(v1.com != undefined){
-
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Community</div><div class='col-md-6 text-center'>"+v1.com+"</div></div>");
-   		}
+      }
 
 
 
+      if(v1.com != undefined){
 
-   		if(v1.dob != undefined){
+              content=content+"<div class='col-md-2'>"+v1.com+"</div>";
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Date of birth</div><div class='col-md-6 text-center'>"+v1.dob+"</div></div>");
-   		}
-
-
-
-   		})
-
-   		   		$('#mydoc').append("<hr style='border:2px solid black'>");
+      }
 
 
+
+
+      if(v1.dob != undefined){
+                content=content+"<div class='col-md-2'>"+v1.dob+"</div>";
+
+      }
+
+
+
+
+
+      })
+
+
+
+           $('#textbody').append("<div class='row'>"+content+"</div><hr>");
 
 
 });
@@ -158,13 +284,36 @@ if(v1.rno != undefined){
         console.log(val);
       });
 
-		 $('#print').click(function(){
-		 	window.print();
-		 })
+     $('#print').click(function(){
+      window.print();
+     })
 
 
 
-	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      })
+
+
+      
+
+
 </script>
 </head>
 <body style="background-color: grey">
@@ -272,8 +421,42 @@ Date of birth:
 <div id="mydoc">
 
 
+  
+  <table border="0" width="100%"> 
+   <thead> 
+    <tr> 
+     <th style="width:100%" class="text-center">Govt Arts College</th> 
+   </tr> 
+   <tr> 
+    <th><hr style="color:#000080"/></th> 
+   </tr> 
+  </thead> 
+  <tfoot>
+   <tr> 
+    <td width="100%"> 
+     <table width="100%" border="0"> 
+       <tr> 
+         <td colspan="4"><br>&nbsp;</td> 
+      </tr> 
+    </table> 
+  </tfoot>
+  <tbody id="textbody"> 
+ 
+ </tbody> 
+</table>
+
+
+<table id="footer" width="100%"> 
+  <tr> 
+  <td style="width: 100%" class="text-center"> 
+    Dharmapuri
+  </td>
+  </tr>
+</table>
+
+
+
 	</div>
 </div>
-
 </body>
 </html>

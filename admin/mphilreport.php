@@ -13,35 +13,86 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.jqueryui.min.js"></script>
 <style type="text/css">
   
-    tfoot input {
-        width: 100px;
-        padding: 10px;
-    }
-      input[type=button]{
-        margin-right: 10px;
+      @media print
+{
+  #footer {
+    display: block; 
+    position: fixed; 
+    bottom: 0;
+  } 
+}
+@page { margin: 0; }
 
-      }
-        input[type=button]{
-                    margin-right: 10px;
+td{
+  color: black;
+}
 
-
-        }
-        h3{
-            color: white;
-        }
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
     		// `ano`, `name`, `sex`, `Community`, `Bank`, `joindate`, `amount`
+           $('#save_value').click(function(){
 
-		 $('#save_value').click(function(){
 
-      $('#mydoc').empty();
-
+		 $('#textbody').empty();
         var val = [];
         $(':checkbox:checked').each(function(i){
           val[i] = $(this).val();
         });
+
+        var content="";
+
+           for(var i=0;i<val.length;i++){
+
+
+            titleval="";
+
+
+        
+
+        if("name"==val[i]){
+
+          titleval="Name";
+        }
+
+      
+       else if("ano"==val[i]){
+
+        titleval="Admission number"
+        }
+        else if("year" ==val[i]){
+          titleval="Year";
+        
+        }
+
+
+      else if("sex" == val[i]){
+        titleval="Gender";
+      }
+      else if("Community" == val[i]){
+        titleval="Community" 
+      }
+      else if("joindate" == val[i]){
+        titleval="Join_date"; 
+      }
+      else if("Bank" == val[i]){
+        titleval="Bank"; 
+      }
+
+
+else if("amount" == val[i]){
+
+        titleval="Amount";
+      }
+
+
+
+            content=content+"<div class='col-md-2' style='font-weight:bold'>"+titleval+"</div>";
+
+
+           }
+           $('#textbody').append("<div class='row'>"+content+"</div><hr>");
+
 
 
 
@@ -56,33 +107,38 @@
    	console.log(data);
    	$.each(data,function(key,value){
 
+content="";
 
    		$.each(value,function(k1,v1){
 
    			if(v1.name != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Name</div><div class='col-md-6 text-center'>"+v1.name+"</div></div>");
+   		        content=content+"<div class='col-md-2'>"+v1.name+"</div>";
+
    		}
 
 
 
    			if(v1.ano != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Admission number</div><div class='col-md-6 text-center'>"+v1.ano+"</div></div>");
+   			        content=content+"<div class='col-md-2'>"+v1.ano+"</div>";
+
    		}
    			
 
    	
    		if(v1.sex != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Gender</div><div class='col-md-6 text-center'>"+v1.sex+"</div></div>");
+   		        content=content+"<div class='col-md-2'>"+v1.sex+"</div>";
+
    		}
 
 
 
    		if(v1.Community != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Community</div><div class='col-md-6 text-center'>"+v1.Community+"</div></div>");
+   		        content=content+"<div class='col-md-2'>"+v1.Community+"</div>";
+
    		}
 
 
@@ -90,18 +146,21 @@
 
    		if(v1.joindate != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Join of date</div><div class='col-md-6 text-center'>"+v1.joindate+"</div></div>");
+   		        content=content+"<div class='col-md-2'>"+v1.joindate+"</div>";
+
    		}
 
    			if(v1.Bank != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Bank</div><div class='col-md-6 text-center'>"+v1.Bank+"</div></div>");
+   		        content=content+"<div class='col-md-2'>"+v1.Bank+"</div>";
+
    		}
 
 
    			if(v1.amount != undefined){
 
-   			$('#mydoc').append("<div class='row'><div class='col-md-6 text-center'>Amount</div><div class='col-md-6 text-center'>"+v1.amount+"</div></div>");
+   		        content=content+"<div class='col-md-2'>"+v1.amount+"</div>";
+
    		}
 
 
@@ -109,7 +168,7 @@
 
    		})
 
-   		   		$('#mydoc').append("<hr style='border:2px solid black'>");
+           $('#textbody').append("<div class='row'>"+content+"</div><hr>");
 
 
 
@@ -177,7 +236,7 @@ Gender:
 
 Community:
 
-<input name="selector[]" id="ad_Checkbox4" class="ads_Checkbox" type="checkbox" value="com" />
+<input name="selector[]" id="ad_Checkbox4" class="ads_Checkbox" type="checkbox" value="Community" />
 </div>
 
 	<div class="col-md-3">
@@ -209,7 +268,38 @@ Join Date:
 </div>
 </div>
 <div id="mydoc">
+ 
+  <table border="0" width="100%"> 
+   <thead> 
+    <tr> 
+     <th style="width:100%" class="text-center">Govt Arts College</th> 
+   </tr> 
+   <tr> 
+    <th><hr style="color:#000080"/></th> 
+   </tr> 
+  </thead> 
+  <tfoot>
+   <tr> 
+    <td width="100%"> 
+     <table width="100%" border="0"> 
+       <tr> 
+         <td colspan="4"><br>&nbsp;</td> 
+      </tr> 
+    </table> 
+  </tfoot>
+  <tbody id="textbody"> 
+ 
+ </tbody> 
+</table>
 
+
+<table id="footer" width="100%"> 
+  <tr> 
+  <td style="width: 100%" class="text-center"> 
+    Dharmapuri
+  </td>
+  </tr>
+</table>
 
 	</div>
 </div>
