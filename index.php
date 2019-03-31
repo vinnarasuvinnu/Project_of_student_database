@@ -22,7 +22,7 @@ $(document).ready(function(){
 <body>
 <div class="container" >
   <div class="info">
-  <h1>SKILL PICKER</h1>
+  <h1>Student Registration</h1>
 </div>
 
 
